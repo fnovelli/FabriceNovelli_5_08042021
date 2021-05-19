@@ -1,6 +1,6 @@
 let apiUrl = 'http://localhost:3000/api/';
 
-
+  //Check and display all the products available
 function listProduct(teddies) {
     let res = document.getElementById('fonctionBlock');
 
@@ -40,7 +40,7 @@ function listProduct(teddies) {
     }
 }
 
-
+//Connect to the API then display the products
 async function getAPI() {
     let result = await fetch(apiUrl + 'teddies');
        if (result.ok) {

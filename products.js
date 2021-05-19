@@ -1,6 +1,7 @@
 let apiUrl = 'http://localhost:3000/api/';
 
-function getTeddyID() {
+
+function getTeddyID() { //get the ID from the product from the URL page.
     return new URL(window.location.href).searchParams.get('id')
   }
 
@@ -12,6 +13,7 @@ async function getAPI() {
        }
 }
 
+  //Display product according to its current ID.
 function displayCurrentProduct(curTed) {
     let res = document.getElementById('fonctionBlock');
 
