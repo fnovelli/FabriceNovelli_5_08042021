@@ -11,15 +11,13 @@ function listProduct(teddies) {
             let card = document.createElement("a");
             res.appendChild(card);
             card.classList.add("bCard");
-            card.href = "products.html?id=" + teddies[i]._id;
-
+            card.href = "products.html?id=" + teddies[i]._id; //add the product ID to the URL so we can use it after
 
             let img = document.createElement("img");
             card.appendChild(img);
             img.classList.add("bImg");
             img.src = teddies[i].imageUrl;
-
-            
+        
             let name = document.createElement("div");
             card.appendChild(name);
             name.classList.add("bTitle");
@@ -30,12 +28,10 @@ function listProduct(teddies) {
             desc.classList.add("bText");
             desc.textContent = teddies[i].description;
 
-
             let price = document.createElement("div");
             card.appendChild(price);
             price.classList.add("bPrice");     
-            price.textContent = teddies[i].price / 100 + '€';
-
+            price.textContent = teddies[i].price / 100 + '€'; //fix price display
         }
     }
 }

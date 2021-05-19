@@ -18,9 +18,9 @@ function displayCurrentProduct(curTed) {
     let res = document.getElementById('fonctionBlock');
 
     if (res) {
-            let card = document.createElement("a");
+            let card = document.createElement("div");
             res.appendChild(card);
-            card.classList.add("bCard");
+            card.classList.add("bCardDetail");
 
 
             let img = document.createElement("img");
@@ -45,11 +45,21 @@ function displayCurrentProduct(curTed) {
             price.classList.add("bPrice");     
             price.textContent = curTed.price / 100 + '€';
 
+            //Add an option to custom the product
             let color = document.createElement("div");
             card.appendChild(color);
             color.classList.add("bText");
             color.textContent = "Color: " + curTed.colors;
-    }
+
+            //Add a button to add to the cart
+            let btnCart = document.createElement("a");
+            card.appendChild(btnCart);
+            btnCart.classList.add("btnAddCart");
+            let btnText = document.createElement("div");
+            btnCart.appendChild(btnText);
+            btnText.classList.add("btnText");
+            btnText.textContent = "Ajouter au Panier";
+        }
 }
 
 

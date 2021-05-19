@@ -1,24 +1,36 @@
-body {
-  width: auto;
-  font-size: 16px;
-}
-
-#logoNav {
-  background-color: #f3e9f1;
+.btnText {
+  -ms-flex-item-align: center;
+      align-self: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-width: 200px;
+  min-height: 45px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  text-decoration: none;
+  font-size: 18px;
 }
 
-#logoBlock {
-  margin-top: 15px;
-  margin-left: 20px;
-  min-width: 200px;
-  background-image: url("../images/logo.png");
-  background-repeat: no-repeat;
+.btnAddCart {
+  max-width: 195px;
+  margin-top: 20px;
+  background: radial-gradient(#FF79DA, #9356dc);
+  border-radius: 20px;
+  max-height: 50px;
+  color: white;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+
+body {
+  width: auto;
+  font-size: 16px;
 }
 
 .cart {
@@ -98,18 +110,38 @@ main {
           flex-direction: column;
   padding: 5px;
   margin-top: 15px;
-  max-width: 60%;
+  max-width: 50%;
   text-decoration: none;
   border-radius: 20px;
   -webkit-box-shadow: 0 0 16px #0000002e;
           box-shadow: 0 0 16px #0000002e;
-  cursor: pointer;
   color: black;
 }
 
 .bCard:hover {
   -webkit-transform: scale(1.01);
           transform: scale(1.01);
+}
+
+.bCardDetail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  background-color: white;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 5px;
+  margin-top: 15px;
+  max-width: 68%;
+  text-decoration: none;
+  border-radius: 20px;
+  -webkit-box-shadow: 0 0 16px #0000002e;
+          box-shadow: 0 0 16px #0000002e;
+  color: black;
 }
 
 .bImg {
@@ -195,6 +227,24 @@ main {
     display: -ms-flexbox;
     display: flex;
   }
+}
+
+#logoNav {
+  background-color: #f3e9f1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#logoBlock {
+  margin-top: 15px;
+  margin-left: 20px;
+  min-width: 200px;
+  background-image: url("../images/logo.png");
+  background-repeat: no-repeat;
 }
 
 #footerBlock {
