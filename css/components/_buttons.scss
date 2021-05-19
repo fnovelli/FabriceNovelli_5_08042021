@@ -5,7 +5,7 @@
     min-height: 45px;
     justify-content: center;
     display: flex;
-    text-decoration: none;
+
     font-size: 18px;
 }
 
@@ -20,5 +20,6 @@
     position: relative;
     z-index: 1;
     cursor: pointer;
+    text-decoration: none;
 }
 

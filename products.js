@@ -43,14 +43,29 @@ function displayCurrentProduct(curTed) {
             let price = document.createElement("div");
             card.appendChild(price);
             price.classList.add("bPrice");     
-            price.textContent = curTed.price / 100 + '€';
+            price.textContent = "Prix: " + curTed.price / 100 + " €";
 
-            //Add an option to custom the product
-            let color = document.createElement("div");
-            card.appendChild(color);
-            color.classList.add("bText");
-            color.textContent = "Color: " + curTed.colors;
+            //Add an option to customize the product
+            let form = document.createElement("label");
+            let texForm = document.createElement("div");
+            
+            //create label for color choice
+            let color = document.createElement("select");
+            card.appendChild(form);
+            form.appendChild(texForm);
+            form.appendChild(color);
+            texForm.classList.add("bText");
+            texForm.textContent = "Color: ";
+            
+            //add each color to the label
+            for (let i = 0; i < curTed.colors.length; i++) {
+                let colorChoice = document.createElement("option");
+                colorChoice.setAttribute("value", curTed.colors[i])
+                colorChoice.innerHTML = curTed.colors[i];
+                color.appendChild(colorChoice);
+            }
 
+    
             //Add a button to add to the cart
             let btnCart = document.createElement("a");
             card.appendChild(btnCart);
