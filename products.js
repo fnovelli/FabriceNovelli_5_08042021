@@ -1,5 +1,5 @@
 let apiUrl = 'http://localhost:3000/api/';
-
+let stock = 31;
 
 function getTeddyID() { //get the ID from the product from the URL page.
     return new URL(window.location.href).searchParams.get('id')
@@ -47,15 +47,17 @@ function displayCurrentProduct(curTed) {
 
             //Add an option to customize the product
             let form = document.createElement("label");
-            let texForm = document.createElement("div");
-            
+            let texForm = document.createElement("div");  
             //create label for color choice
             let color = document.createElement("select");
+            form.classList.add("bText");
+
             card.appendChild(form);
             form.appendChild(texForm);
             form.appendChild(color);
-            texForm.classList.add("bText");
-            texForm.textContent = "Color: ";
+      
+
+            texForm.textContent = "Couleur: ";
             
             //add each color to the label
             for (let i = 0; i < curTed.colors.length; i++) {
@@ -63,6 +65,29 @@ function displayCurrentProduct(curTed) {
                 colorChoice.setAttribute("value", curTed.colors[i])
                 colorChoice.innerHTML = curTed.colors[i];
                 color.appendChild(colorChoice);
+            }
+
+
+            //Add an option to select the quantity
+            let form2 = document.createElement("label");
+            let texForm2 = document.createElement("div");  
+            //create label for color choice
+            let qty = document.createElement("select");
+            form2.classList.add("bText");
+
+            card.appendChild(form2);
+            form2.appendChild(texForm2);
+            form2.appendChild(qty);
+      
+
+            texForm2.textContent = "Quantité: ";
+            
+            //add the quantity to the label
+            for (let i = 1; i < stock; i++) { //We want to start with 1 and not 0
+                let curQty = document.createElement("option");
+                curQty.setAttribute("value", [i]) 
+                curQty.innerHTML = [i];
+                qty.appendChild(curQty);
             }
 
     
