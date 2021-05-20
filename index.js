@@ -1,5 +1,6 @@
 let apiUrl = 'http://localhost:3000/api/';
 
+
   //Check and display all the products available
 function listProduct(teddies) {
     let res = document.getElementById('fonctionBlock');

@@ -11,9 +11,38 @@
 }
 
 #logoBlock {
-    margin-top: 15px;
+    margin-top: 25px;
     margin-left: 20px;
     min-width: 200px;
     background-image: url('../images/logo.png');
     background-repeat: no-repeat;  
 }
+
+
+.cart {
+    margin-top: 40px;
+
+    font-size: 40px;
+    text-decoration: none;
+    color: rgb(27, 27, 27);
+    margin-left: auto;
+    margin-right: 45px;
+    text-align: right;
+    display: flex;
+}
+
+.cart:visited {
+    text-decoration: none;
+}
+
+.textCart {
+    margin-left: 5px;
+    font-size: 25px;
+
+
+}
+
+.navbar-brand {
+    margin-top: -15px;
+}
+

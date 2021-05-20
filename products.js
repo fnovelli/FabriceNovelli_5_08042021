@@ -1,5 +1,5 @@
 let apiUrl = 'http://localhost:3000/api/';
-let stock = 31;
+let stock = 30;
 
 function getTeddyID() { //get the ID from the product from the URL page.
     return new URL(window.location.href).searchParams.get('id')
@@ -21,7 +21,6 @@ function displayCurrentProduct(curTed) {
             let card = document.createElement("div");
             res.appendChild(card);
             card.classList.add("bCardDetail");
-
 
             let img = document.createElement("img");
             card.appendChild(img);
@@ -83,7 +82,7 @@ function displayCurrentProduct(curTed) {
             texForm2.textContent = "Quantité: ";
             
             //add the quantity to the label
-            for (let i = 1; i < stock; i++) { //We want to start with 1 and not 0
+            for (let i = 1; i < stock + 1; i++) { //We want to start with 1 and not 0
                 let curQty = document.createElement("option");
                 curQty.setAttribute("value", [i]) 
                 curQty.innerHTML = [i];
@@ -94,13 +93,27 @@ function displayCurrentProduct(curTed) {
             //Add a button to add to the cart
             let btnCart = document.createElement("a");
             card.appendChild(btnCart);
-            btnCart.classList.add("btnAddCart");
+            btnCart.setAttribute("id", "btnAddCart");
             let btnText = document.createElement("div");
             btnCart.appendChild(btnText);
             btnText.classList.add("btnText");
             btnText.textContent = "Ajouter au Panier";
+            
+            //add the product if user click on the button
+            let getCart = document.getElementById("btnAddCart");
+             getCart.addEventListener('click', (event) =>{
+                let cartQty = document.getElementById("cartQty");
+                cartQty.classList.add("bText");
+                cartQty.innerHTML = qty.value;
+          });
         }
 }
 
 
+
+
 getAPI();
+
+
+  
+
