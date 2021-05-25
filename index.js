@@ -1,6 +1,3 @@
-let apiUrl = 'http://localhost:3000/api/';
-
-
 function addProductInfoToCard(divType, curCard, className) {
     curCard.appendChild(divType);
     divType.classList.add(className);
@@ -43,13 +40,14 @@ function listProduct(teddies) {
 }
 
 //Connect to the API then display the products
-async function getAPI() {
-    let result = await fetch(apiUrl + 'teddies');
+async function loadProducts() {
+    let result = await getAPI(null);
        if (result.ok) {
            let teddies = await result.json();
-           listProduct(teddies);
+           await listProduct(teddies);
+
        }
 }
 
 
-getAPI();
+loadProducts();

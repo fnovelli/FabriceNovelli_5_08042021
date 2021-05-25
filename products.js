@@ -1,4 +1,3 @@
-let apiUrl = 'http://localhost:3000/api/';
 let stock = 30;
 let colorForm = 2;
 let qtyForm = 4;
@@ -6,14 +5,6 @@ let qtyForm = 4;
 function getTeddyID() { //get the ID from the product from the URL page.
     return new URL(window.location.href).searchParams.get('id')
   }
-
-async function getAPI() {
-    let result = await fetch(apiUrl + 'teddies/' + getTeddyID());
-       if (result.ok) {
-           let teddies = await result.json();
-           displayCurrentProduct(teddies);
-       }
-}
 
 function AddColorOption(curTed, curClass) {
   for (let i = 0; i < curTed.colors.length; i++) {
@@ -30,7 +21,7 @@ function AddQtyOption(stock, curClass) {
     curQty.setAttribute("value", [i]) 
     curQty.innerHTML = [i];
     curClass.appendChild(curQty); 
-}
+  }
 }
 
   //Display product according to its current ID.
@@ -52,7 +43,7 @@ function displayCurrentProduct(curTed) {
             let price = document.getElementsByClassName('bPrice');
             price[0].textContent = curTed.price / 100 + " €";
 
-            //Add an option to customize the product
+            //Add options to customize the product
             AddColorOption(curTed, getText[colorForm]);            
             AddQtyOption(stock, getText[qtyForm]);
 
@@ -61,13 +52,22 @@ function displayCurrentProduct(curTed) {
              getCart.addEventListener('click', (event) =>{
                 let cartQty = document.getElementById("cartQty");
                 cartQty.classList.add("bText");
-                cartQty.innerHTML = qty.value;
+                cartQty.innerHTML = getText[qtyForm].value;
+                localStorage.setItem('id', getTeddyID());
           });
         }
 }
 
 
-getAPI();
+async function loadSelectedProduct() {
+  let result = await getAPI(getTeddyID());
+     if (result.ok) {
+        let teddies = await result.json();
+         await displayCurrentProduct(teddies);
+     }   
+}
+
+loadSelectedProduct();
 
 
   
