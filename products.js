@@ -58,7 +58,7 @@ function displayCurrentProduct(curTed) {
         }
 }
 
-
+//connect to api then display the product selected
 async function loadSelectedProduct() {
   let result = await getAPI(getTeddyID());
      if (result.ok) {

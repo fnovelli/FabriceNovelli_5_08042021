@@ -1,7 +1,3 @@
-function addProductInfoToCard(divType, curCard, className) {
-    curCard.appendChild(divType);
-    divType.classList.add(className);
-}
 
   //Check and display all the products available
 function listProduct(teddies) {
