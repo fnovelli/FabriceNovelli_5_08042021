@@ -1,5 +1,4 @@
 let res = document.getElementById('fonctionBlock');
-let card = document.getElementsByClassName('bCardDetail');
 
 
 function displayEmptyCart() {
@@ -15,15 +14,32 @@ function displayEmptyCart() {
 
 async function loadCartProduct() {
 
-  let cartCont = localStorage.getItem('id');
+  let cartCont = JSON.parse(localStorage.getItem("getCartContent"));
 
   if (cartCont) {
-    let result = await getAPI(cartCont);
-     if (result.ok) {
-        let teddies = await result.json();
-         await displayCurrentProduct(teddies);
-     }   
+
+    console.log("found the cart content");
+
+    if (res) {
+         //add button for order
+        createCartBtn("btnAddCart", "Commander");
+
+        //add button to clear cart
+        createCartBtn("btnClearCart", "Vider le Panier");
+        addListenerCartBtn();
+    }
+
+    
+    for (let i =0; i< cartCont.length; i++) {
+      let result = await getAPI(cartCont[i].id);
+      if (result.ok) {
+         let teddies = await result.json();
+
+      displayCurrentProduct(teddies);
+    }
+ 
   }
+}
   else {
       await displayEmptyCart(); 
   }
@@ -53,35 +69,32 @@ function createCartBtn(type, text)
 }
 
 //Display product according to its current ID.
-function displayCurrentProduct(curTed) {
+function displayCurrentProduct(tedAPI) {
 
     if (res) {
 
        //add current product information (title, image etc.) to the card.
-        let img = document.getElementsByClassName('bImg');
-        img[0].src = curTed.imageUrl;
+       let card = document.createElement("div");
+       addProductInfoToCard(card, res, "bCardDetail");
+    
+       let img = document.createElement("img");
+       addProductInfoToCard(img, card, "bImg");
+       img.src = tedAPI.imageUrl;
 
         //add name of the product
         let name = document.createElement("div");
-        addProductInfoToCard(name, card[0], "bTitle");
-        name.textContent = curTed.name;
+        addProductInfoToCard(name, card, "bTitle");
+        name.textContent = tedAPI.name;
 
         //add description of the product
         let desc = document.createElement("div");
-        addProductInfoToCard(desc, card[0], "bText");
-        desc.textContent = curTed.description;
+        addProductInfoToCard(desc, card, "bText");
+        desc.textContent = tedAPI.description;
 
         //add price of  the product
         let price = document.createElement("div");
-        addProductInfoToCard(price, card[0], "bPrice");
-        price.textContent = curTed.price / 100 + '€'; //fix price display
-
-        //add button for order
-        createCartBtn("btnAddCart", "Commander");
-
-        //add button to clear cart
-        createCartBtn("btnClearCart", "Vider le Panier");
-        addListenerCartBtn();
+        addProductInfoToCard(price, card, "bPrice");
+        price.textContent = tedAPI.price / 100 + '€'; //fix price display*/
 
     }
 }

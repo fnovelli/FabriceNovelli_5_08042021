@@ -23,3 +23,11 @@ function addProductInfoToCard(divType, curCard, className) {
     curCard.appendChild(divType);
     divType.classList.add(className);
 }
+
+class CartProduct {
+    constructor(name, id, quantity) {
+        this.name = name;
+        this.id = id;
+        this.quantity = quantity;
+    }
+}

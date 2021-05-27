@@ -50,10 +50,16 @@ function displayCurrentProduct(curTed) {
             //add the product if user click on the add product button
             let getCart = document.getElementById("btnAddCart");
              getCart.addEventListener('click', (event) =>{
-                let cartQty = document.getElementById("cartQty");
-                cartQty.classList.add("bText");
-                cartQty.innerHTML = getText[qtyForm].value;
-                localStorage.setItem('id', getTeddyID());
+              let getCartContent = JSON.parse(localStorage.getItem("getCartContent"));
+
+              if (!getCartContent ) {
+                getCartContent = [];
+              }
+              let product = new CartProduct(curTed.name, curTed._id, 1);
+              getCartContent.push(product);
+              localStorage.setItem("getCartContent", JSON.stringify(getCartContent));
+              console.log("added " + curTed.name);
+
           });
         }
 }
