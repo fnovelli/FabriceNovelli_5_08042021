@@ -8,7 +8,6 @@ body {
 
 
 
-
 main {
     font-family: 'Roboto';
 }
@@ -30,6 +29,10 @@ main {
     display: flex;
 }
 
+#formBlock {
+  display: flex;
+  flex-direction: column;
+}
 
 .titleBlock {
     font-weight: bold;
