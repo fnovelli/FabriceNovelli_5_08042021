@@ -10,7 +10,7 @@ function listProduct(teddies) {
             //create original card 
             let card = document.createElement("a");
             addProductInfoToCard(card, res, "bCard");
-            card.href = "products.html?id=" + teddies[i]._id;     //add the product ID to the URL so we can use it after
+            card.href = "products.html?id=" + teddies[i]._id;    //add the product ID to the URL so we can use it after
 
             //add picture of the product
             let img = document.createElement("img");

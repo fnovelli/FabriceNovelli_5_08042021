@@ -20,17 +20,15 @@ async function loadCartProduct() {
 
     console.log("found the cart content");
 
-    if (res) {
-         //add button for order
-        createCartBtn("btnAddCart", "Commander");
+      //add button for order
+      createCartBtn("btnAddCart", "Commander");
 
-        //add button to clear cart
-        createCartBtn("btnClearCart", "Vider le Panier");
-        addListenerCartBtn();
-    }
+      //add button to clear cart
+      createCartBtn("btnClearCart", "Vider le Panier");
+      addListenerCartBtn();
 
     
-    for (let i =0; i< cartCont.length; i++) {
+    for (let i =0; i < cartCont.length; i++) {
       let result = await getAPI(cartCont[i].id);
       if (result.ok) {
          let teddies = await result.json();
