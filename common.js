@@ -25,9 +25,10 @@ function addProductInfoToCard(divType, curCard, className) {
 }
 
 class CartProduct {
-    constructor(name, id, quantity) {
+    constructor(name, id, quantity, color) {
         this.name = name;
         this.id = id;
         this.quantity = quantity;
+        this.color = color;
     }
 }

@@ -1,4 +1,5 @@
 let res = document.getElementById('fonctionBlock');
+let totalPrice = 0;
 
 
 function displayEmptyCart() {
@@ -35,8 +36,9 @@ async function loadCartProduct() {
 
       displayCurrentProduct(teddies, cartCont[i]);
     }
- 
   }
+
+  await DisplayTotalPrice();
 }
   else {
       await displayEmptyCart(); 
@@ -49,6 +51,7 @@ let getCart = document.getElementById("btnClearCart");
 if (getCart) {
 getCart.addEventListener('click', (event) =>{
 
+    totalPrice = 0;
    localStorage.clear();
    location.reload();
 });
@@ -64,6 +67,12 @@ function createCartBtn(type, text)
   btnType.appendChild(div);
   div.innerHTML = text;
   div.classList.add('btnText');
+}
+
+async function DisplayTotalPrice() {
+  let total = document.createElement("div");
+  addProductInfoToCard(total, res, "bPrice");
+  total.textContent = "Prix Total: " + totalPrice + " €";
 }
 
 //Display product according to its current ID.
@@ -89,6 +98,11 @@ function displayCurrentProduct(tedAPI, tedCart) {
         addProductInfoToCard(desc, card, "bText");
         desc.textContent = tedAPI.description;
 
+        
+        let color = document.createElement("div");
+        addProductInfoToCard(color, card, "bPrice");
+        color.textContent = "Couleur: " + tedCart.color;
+
         let qty = document.createElement("div");
         addProductInfoToCard(qty, card, "bPrice");
         qty.textContent = "Quantité: " + tedCart.quantity;
@@ -96,7 +110,8 @@ function displayCurrentProduct(tedAPI, tedCart) {
         //add price of  the product
         let price = document.createElement("div");
         addProductInfoToCard(price, card, "bPrice");
-        price.textContent = "Prix Total: " + tedAPI.price / 100 * tedCart.quantity + '€'; //fix price display*/
+        price.textContent = "Prix: " + tedAPI.price / 100 * tedCart.quantity + '€'; //fix price display*/
+        totalPrice += tedAPI.price / 100 * tedCart.quantity;
 
     }
 }
