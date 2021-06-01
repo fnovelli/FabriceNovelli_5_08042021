@@ -33,7 +33,7 @@ async function loadCartProduct() {
       if (result.ok) {
          let teddies = await result.json();
 
-      displayCurrentProduct(teddies);
+      displayCurrentProduct(teddies, cartCont[i]);
     }
  
   }
@@ -67,7 +67,7 @@ function createCartBtn(type, text)
 }
 
 //Display product according to its current ID.
-function displayCurrentProduct(tedAPI) {
+function displayCurrentProduct(tedAPI, tedCart) {
 
     if (res) {
 
@@ -89,10 +89,14 @@ function displayCurrentProduct(tedAPI) {
         addProductInfoToCard(desc, card, "bText");
         desc.textContent = tedAPI.description;
 
+        let qty = document.createElement("div");
+        addProductInfoToCard(qty, card, "bPrice");
+        qty.textContent = "Quantité: " + tedCart.quantity;
+
         //add price of  the product
         let price = document.createElement("div");
         addProductInfoToCard(price, card, "bPrice");
-        price.textContent = tedAPI.price / 100 + '€'; //fix price display*/
+        price.textContent = "Prix Total: " + tedAPI.price / 100 * tedCart.quantity + '€'; //fix price display*/
 
     }
 }
