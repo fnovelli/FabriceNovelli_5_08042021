@@ -29,7 +29,7 @@ function listProduct(teddies) {
 
             //add price of  the product
             let price = document.createElement("div");
-            addProductInfoToCard(price, card, "bText");
+            addProductInfoToCard(price, card, "bPrice");
             price.textContent = teddies[i].price / 100 + '€'; //fix price display
         }
     }

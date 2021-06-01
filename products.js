@@ -43,9 +43,11 @@ function displayCurrentProduct(curTed) {
             let price = document.getElementsByClassName('bPrice');
             price[0].textContent = curTed.price / 100 + " €";
 
+            let getQty = document.getElementsByClassName('bOption');
+
             //Add options to customize the product
             AddColorOption(curTed, getText[colorForm]);            
-            AddQtyOption(stock, getText[qtyForm]);
+            AddQtyOption(stock, getQty[0]);
 
             //add the product if user click on the add product button
             let getCart = document.getElementById("btnAddCart");
@@ -55,10 +57,11 @@ function displayCurrentProduct(curTed) {
               if (!getCartContent ) {
                 getCartContent = [];
               }
-              let product = new CartProduct(curTed.name, curTed._id, 1);
+       
+              let product = new CartProduct(curTed.name, curTed._id, getQty[0].value);
               getCartContent.push(product);
               localStorage.setItem("getCartContent", JSON.stringify(getCartContent));
-              console.log("added " + curTed.name);
+              console.log("added " + curTed.name + "with QTY: " + getQty[0].value);
 
           });
         }

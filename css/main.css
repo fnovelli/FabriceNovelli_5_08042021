@@ -175,6 +175,12 @@ main {
   font-weight: 600;
 }
 
+.bOption {
+  margin-left: 10px;
+  margin-top: 5px;
+  max-width: 50%;
+}
+
 .stars {
   margin-left: 10px;
   margin-top: 10px;
