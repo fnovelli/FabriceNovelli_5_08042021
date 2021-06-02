@@ -9,6 +9,19 @@
     font-size: 18px;
 }
 
+#btnOrder {
+    min-width: 200px;
+    margin-top: 20px;
+    background: radial-gradient(#FF79DA, #9356dc);
+    border-radius: 20px;
+    max-height: 50px;
+    color: white;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 
 #btnAddCart {
     max-width: 200px;

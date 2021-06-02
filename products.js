@@ -62,6 +62,7 @@ function displayCurrentProduct(curTed) {
               getCartContent.push(product);
               localStorage.setItem("getCartContent", JSON.stringify(getCartContent));
               console.log("added " + curTed.name + "with QTY: " + getOpt[0].value);
+              location.reload();
 
           });
         }
