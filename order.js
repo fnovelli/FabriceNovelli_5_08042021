@@ -1,3 +1,9 @@
+//get contact info from Form.
+let getBtnOrder = document.getElementById("btnOrder");
+//create list and array to store information
+let contact = {};
+let products = [];
+
 class orderContact {
     constructor(firstName, lastName, address, city, email) {
         this.firstName = firstName;
@@ -6,34 +12,21 @@ class orderContact {
         this.city = city;
         this.email = email;
     }
-
 }
 
+//check the current cart content and store the id
+async function getIDFromCart() {
 
-
-async function getIDFromCart(getIDProduct) {
     let cartCont = JSON.parse(localStorage.getItem("getCartContent"));
-    if (cartCont) {
+    if (cartCont) { 
         for (let i = 0; i < cartCont.length; i++) {
-            let result = await getAPI(cartCont[i].id);
-
-            if (result.ok) {
-                getIDProduct.push(cartCont[i].id);
-                console.log("added ID " + cartCont[i].id);
-            }
+            products.push(cartCont[i].id); 
         }
     }
 }
 
-
-    //get contact info from Form.
-    let getBtnOrder = document.getElementById("btnOrder");
-
-    getBtnOrder.addEventListener('click', (event) =>{
-
-    getFormContent = [];
-    getIDProduct = [];
-
+//check and store contact info
+async function getContactInfo() {
 
     let name = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
@@ -41,15 +34,43 @@ async function getIDFromCart(getIDProduct) {
     let city = document.getElementById('city').value;
     let mail = document.getElementById('email').value;
 
-    let contact = new orderContact(name, lastName, address, city, mail);
+    contact = new orderContact(name, lastName, address, city, mail);
+}
 
+//send order to backend
+async function CheckAndSendOrder() {
 
-    getFormContent.push(contact);
-    console.log("PUSHED");
-    getIDFromCart(getIDProduct);
-    console.log(contact);
-    event.preventDefault();
+    let OrderObject = JSON.stringify({contact, products});
+    console.log(OrderObject);
+    try {
+        let response = await fetch(getUrlOrder(), {
+            method: 'POST',
+          headers: {
+                'content-type': 'application/json'
+            },
+            body: OrderObject,
+        });
 
+        if (response.ok) {
+            console.log('Order completed and sent!');
+        } else {
+            console.error('Error: ', response.status);
+        }
+    } catch (e) {
+        console.log(e);
+    }
 
+}
+
+getBtnOrder.addEventListener('click', async function (event) {
+
+    event.preventDefault(); //prevent auto refresh
+
+    //get and create 2 objects to store contact and product id information
+    await getContactInfo();
+    await getIDFromCart();
+
+    //if all the information are correct, send to the backend.
+    await CheckAndSendOrder(); 
 });
         

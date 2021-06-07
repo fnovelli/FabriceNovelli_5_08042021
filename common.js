@@ -1,4 +1,4 @@
-let apiUrl = 'http://localhost:3000/api/teddies';
+let apiUrl = "http://localhost:3000/api/teddies";
 
 
 //Connect to the API
@@ -6,8 +6,10 @@ async function getAPI(id) {
 
     let result;
     
+    //check if there is an ID requested, if not simply return the api url.
+    
     if (id != null)
-        result = await fetch(apiUrl + '/' + id);
+        result = await fetch(apiUrl + "/" + id);
     else
         result = await fetch(apiUrl);
 
@@ -17,6 +19,10 @@ async function getAPI(id) {
        }
 
        return result;
+}
+
+function getUrlOrder() {
+    return apiUrl + "/order";
 }
 
 function addProductInfoToCard(divType, curCard, className) {

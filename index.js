@@ -1,6 +1,6 @@
 
   //Check and display all the products available
-function listProduct(teddies) {
+async function listProduct(teddies) {
     let res = document.getElementById('fonctionBlock');
 
     if (res) {
