@@ -14,6 +14,24 @@ class orderContact {
     }
 }
 
+async function deleteForm() {
+    
+    let form = document.getElementById('formBlock');
+
+    if (form) {
+        form.remove();
+
+    }
+}
+
+async function DisplayOrderConfirmation() {
+    let block = document.getElementById("articles");
+    let desc = document.createElement("div");
+    desc.classList.add("bText");
+    block.appendChild(desc);
+    desc.textContent = "Merci, votre commande a été validée!"
+}
+
 //check the current cart content and store the id
 async function getIDFromCart() {
 
@@ -37,11 +55,13 @@ async function getContactInfo() {
     contact = new orderContact(name, lastName, address, city, mail);
 }
 
+
 //send order to backend
 async function CheckAndSendOrder() {
 
     let OrderObject = JSON.stringify({contact, products});
     console.log(OrderObject);
+
     try {
         let response = await fetch(getUrlOrder(), {
             method: 'POST',
@@ -53,6 +73,9 @@ async function CheckAndSendOrder() {
 
         if (response.ok) {
             console.log('Order completed and sent!');
+            await deleteForm();
+            await DisplayOrderConfirmation();
+
         } else {
             console.error('Error: ', response.status);
         }
