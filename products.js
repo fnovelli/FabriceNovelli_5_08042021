@@ -58,7 +58,7 @@ function displayCurrentProduct(curTed) {
                 getCartContent = [];
               }
        
-              let product = new CartProduct(curTed.name, curTed._id, getOpt[1].value, getOpt[0].value);
+              let product = new CartProduct(curTed.name, curTed._id, getOpt[1].value, getOpt[0].value, curTed.price);
               getCartContent.push(product);
               localStorage.setItem("getCartContent", JSON.stringify(getCartContent));
               console.log("added " + curTed.name + "with QTY: " + getOpt[0].value);
@@ -73,7 +73,7 @@ async function loadSelectedProduct() {
   let result = await getAPI(getTeddyID());
      if (result.ok) {
         let teddies = await result.json();
-         await displayCurrentProduct(teddies);
+        displayCurrentProduct(teddies);
      }   
 }
 

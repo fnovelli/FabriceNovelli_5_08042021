@@ -28,20 +28,18 @@ async function loadCartProduct() {
       createCartBtn("btnClearCart", "Vider le Panier");
       addListenerCartBtn();
 
-    
     for (let i =0; i < cartCont.length; i++) {
       let result = await getAPI(cartCont[i].id);
       if (result.ok) {
          let teddies = await result.json();
-
-      displayCurrentProduct(teddies, cartCont[i]);
+         displayCurrentProduct(teddies, cartCont[i]);
+      }
     }
-  }
 
-  await DisplayTotalPrice();
+      await DisplayTotalPrice();
 }
   else {
-      await displayEmptyCart(); 
+      displayEmptyCart(); 
   }
 }
 
@@ -51,7 +49,7 @@ let getCart = document.getElementById("btnClearCart");
 if (getCart) {
 getCart.addEventListener('click', (event) =>{
 
-    totalPrice = 0;
+  totalPrice = 0;
    localStorage.clear();
    location.reload();
 });
@@ -110,8 +108,9 @@ function displayCurrentProduct(tedAPI, tedCart) {
         //add price of  the product
         let price = document.createElement("div");
         addProductInfoToCard(price, card, "bPrice");
-        price.textContent = "Prix: " + tedAPI.price / 100 * tedCart.quantity + '€'; //fix price display*/
-        totalPrice += tedAPI.price / 100 * tedCart.quantity;
+        let currentPrice = calcFinalprice(tedCart.price, tedCart.quantity);
+        price.textContent = "Prix: " + currentPrice + '€'; //fix price display*/
+        totalPrice += currentPrice;
 
     }
 }

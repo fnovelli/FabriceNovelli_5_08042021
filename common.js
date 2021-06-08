@@ -1,6 +1,5 @@
 let apiUrl = "http://localhost:3000/api/teddies";
 
-
 //Connect to the API
 async function getAPI(id) {
 
@@ -25,16 +24,21 @@ function getUrlOrder() {
     return apiUrl + "/order";
 }
 
+function calcFinalprice(price, qty) {
+    return price / 100 * qty;
+}
+
 function addProductInfoToCard(divType, curCard, className) {
     curCard.appendChild(divType);
     divType.classList.add(className);
 }
 
 class CartProduct {
-    constructor(name, id, quantity, color) {
+    constructor(name, id, quantity, color, price) {
         this.name = name;
         this.id = id;
         this.quantity = quantity;
         this.color = color;
+        this.price = price;
     }
 }

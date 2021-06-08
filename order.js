@@ -1,8 +1,13 @@
 //get contact info from Form.
 let getBtnOrder = document.getElementById("btnOrder");
+
 //create list and array to store information
 let contact = {};
 let products = [];
+
+//used to get cart content
+let cartCont = JSON.parse(localStorage.getItem("getCartContent"));
+let finalPrice = 0;
 
 class orderContact {
     constructor(firstName, lastName, address, city, email) {
@@ -14,28 +19,9 @@ class orderContact {
     }
 }
 
-async function deleteForm() {
-    
-    let form = document.getElementById('formBlock');
-
-    if (form) {
-        form.remove();
-
-    }
-}
-
-async function DisplayOrderConfirmation() {
-    let block = document.getElementById("articles");
-    let desc = document.createElement("div");
-    desc.classList.add("bText");
-    block.appendChild(desc);
-    desc.textContent = "Merci, votre commande a été validée!"
-}
-
 //check the current cart content and store the id
 async function getIDFromCart() {
 
-    let cartCont = JSON.parse(localStorage.getItem("getCartContent"));
     if (cartCont) { 
         for (let i = 0; i < cartCont.length; i++) {
             products.push(cartCont[i].id); 
@@ -82,6 +68,40 @@ async function CheckAndSendOrder() {
     } catch (e) {
         console.log(e);
     }
+
+}
+
+async function deleteForm() {
+    
+    let form = document.getElementById('formBlock');
+
+    if (form) {
+        form.remove();
+
+    }
+}
+
+async function getFinalPrice() {
+ 
+    for (let i =0; i < cartCont.length; i++) {
+
+        finalPrice += calcFinalprice(cartCont[i].price, cartCont[i].quantity);
+    }
+}
+
+async function DisplayOrderConfirmation() {
+
+    await getFinalPrice();
+    let block = document.getElementById("articles");
+    let desc = document.createElement("div");
+    desc.classList.add("bText");
+    block.appendChild(desc);
+    desc.textContent = "Merci, votre commande a été validée!"
+    let desc2 = document.createElement("div");
+    desc2.classList.add("bText");
+    block.appendChild(desc2);
+
+    desc2.textContent = "Prix total: " + finalPrice + "€";
 
 }
 
