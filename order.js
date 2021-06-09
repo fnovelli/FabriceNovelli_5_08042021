@@ -20,17 +20,27 @@ class orderContact {
 }
 
 //check the current cart content and store the id
-async function getIDFromCart() {
+async function CheckAndStoreIDFromCart() {
 
-    if (cartCont) { 
-        for (let i = 0; i < cartCont.length; i++) {
-            products.push(cartCont[i].id); 
-        }
+    if (!cartCont) {
+        deleteForm();
+        let block = document.getElementById("articles");
+        let desc = document.createElement("div");
+        desc.classList.add("bText");
+        block.appendChild(desc);
+        desc.textContent = "Erreur, votre panier est vide! Merci d'ajouter des articles dans votre panier avant de commander.";
+        return false;
     }
+
+    for (let i = 0; i < cartCont.length; i++) {
+        products.push(cartCont[i].id); 
+    }
+
+    return true;
 }
 
-//check and store contact info
-async function getContactInfo() {
+//get form data and store them.
+async function CheckAndStoreContactInfo() {
 
     let name = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
@@ -38,9 +48,16 @@ async function getContactInfo() {
     let city = document.getElementById('city').value;
     let mail = document.getElementById('email').value;
 
-    contact = new orderContact(name, lastName, address, city, mail);
+    //check if email is valid, the HTML and backend already checks the rest.
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail)) {
+        contact = new orderContact(name, lastName, address, city, mail);
+        return true;
+    }
+    else {
+        alert("Erreur, le formulaire est incorrect!");
+        return false;
+    }
 }
-
 
 async function deleteForm() {
     
@@ -55,7 +72,6 @@ async function deleteForm() {
 async function getFinalPrice() {
  
     for (let i =0; i < cartCont.length; i++) {
-
         finalPrice += calcFinalprice(cartCont[i].price, cartCont[i].quantity);
     }
 }
@@ -87,14 +103,11 @@ async function CreateDivMessage(json) {
     DivOrder.textContent = "Numéro de commande: " + DisplayOrderID(json);
 }
 
-
-
 async function DisplayOrderConfirmation(json) {
 
     await getFinalPrice();
     await CreateDivMessage(json);
     localStorage.clear();
-
 }
 
 //send order to backend
@@ -125,18 +138,20 @@ async function CheckAndSendOrder() {
     } catch (e) {
         console.log(e);
     }
-
 }
+
+
 
 getBtnOrder.addEventListener('click', async function (event) {
 
     event.preventDefault(); //prevent auto refresh
 
-    //get and create 2 objects to store contact and product id information
-    await getContactInfo();
-    await getIDFromCart();
-
     //if all the information are correct, send to the backend.
-    await CheckAndSendOrder(); 
+    if (await CheckAndStoreContactInfo() && await CheckAndStoreIDFromCart()) {
+
+        await CheckAndSendOrder();
+        return;
+    }
+
 });
         

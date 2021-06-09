@@ -24,60 +24,64 @@ function AddQtyOption(stock, curClass) {
   }
 }
 
+function StoreProductInCart(curTed, getOpt) {
+  let getCartContent = JSON.parse(localStorage.getItem("getCartContent"));
+
+  if (!getCartContent ) {
+    getCartContent = [];
+  }
+
+  let product = new CartProduct(curTed.name, curTed._id, getOpt[1].value, getOpt[0].value, curTed.price);
+  getCartContent.push(product);
+  localStorage.setItem("getCartContent", JSON.stringify(getCartContent));
+  alert("Le produit " + curTed.name + " a été ajouté à votre panier.")
+  console.log("added " + curTed.name + "with QTY: " + getOpt[0].value);
+}
+
   //Display product according to its current ID.
 function displayCurrentProduct(curTed) {
-    let res = document.getElementById('fonctionBlock');
 
-    if (res) {
-
-            //add current product information (title, image etc.) to the card.
-            let img = document.getElementsByClassName('bImg');
-            img[0].src = curTed.imageUrl;
+    //add current product information (title, image etc.) to the card.
+    let img = document.getElementsByClassName('bImg');
+    img[0].src = curTed.imageUrl;
         
-            let name = document.getElementsByClassName('bTitle');
-            name[0].textContent = curTed.name;
+    let name = document.getElementsByClassName('bTitle');
+    name[0].textContent = curTed.name;
  
-            let getText = document.getElementsByClassName('bText');
-            getText[0].textContent = curTed.description;
+    let getText = document.getElementsByClassName('bText');
+    getText[0].textContent = curTed.description;
 
-            let price = document.getElementsByClassName('bPrice');
-            price[0].textContent = curTed.price / 100 + " €";
+    let price = document.getElementsByClassName('bPrice');
+    price[0].textContent = curTed.price / 100 + " €";
 
-            let getOpt = document.getElementsByClassName('bOption');
+    let getOpt = document.getElementsByClassName('bOption');
 
-            //Add options to customize the product
-            AddColorOption(curTed, getOpt[0]);            
-            AddQtyOption(stock, getOpt[1]);
+    //Add options to customize the product
+    AddColorOption(curTed, getOpt[0]);            
+    AddQtyOption(stock, getOpt[1]);
 
-            //add the product if user click on the add product button
-            let getCart = document.getElementById("btnAddCart");
-             getCart.addEventListener('click', (event) =>{
-              let getCartContent = JSON.parse(localStorage.getItem("getCartContent"));
+    //add the product if user click on the add product button
+    let getCart = document.getElementById("btnAddCart");
+    getCart.addEventListener('click', () =>{
 
-              if (!getCartContent ) {
-                getCartContent = [];
-              }
-       
-              let product = new CartProduct(curTed.name, curTed._id, getOpt[1].value, getOpt[0].value, curTed.price);
-              getCartContent.push(product);
-              localStorage.setItem("getCartContent", JSON.stringify(getCartContent));
-              console.log("added " + curTed.name + "with QTY: " + getOpt[0].value);
-              location.reload();
-
-          });
-        }
+      StoreProductInCart(curTed, getOpt);       
+    });
+        
 }
 
 //connect to api then display the product selected
-async function loadSelectedProduct() {
+async function LoadSelectedProduct() {
   let result = await getAPI(getTeddyID());
+
      if (result.ok) {
-        let teddies = await result.json();
-        displayCurrentProduct(teddies);
-     }   
+        let curTed = await result.json();
+        displayCurrentProduct(curTed);
+     }
+
+
 }
 
-loadSelectedProduct();
+LoadSelectedProduct();
 
 
   
