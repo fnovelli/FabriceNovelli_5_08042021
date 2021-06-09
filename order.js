@@ -1,7 +1,7 @@
 //get contact info from Form.
 let getBtnOrder = document.getElementById("btnOrder");
 
-//create list and array to store information
+//create list and array to store information later
 let contact = {};
 let products = [];
 
@@ -42,35 +42,6 @@ async function getContactInfo() {
 }
 
 
-//send order to backend
-async function CheckAndSendOrder() {
-
-    let OrderObject = JSON.stringify({contact, products});
-    console.log(OrderObject);
-
-    try {
-        let response = await fetch(getUrlOrder(), {
-            method: 'POST',
-          headers: {
-                'content-type': 'application/json'
-            },
-            body: OrderObject,
-        });
-
-        if (response.ok) {
-            console.log('Order completed and sent!');
-            await deleteForm();
-            await DisplayOrderConfirmation();
-
-        } else {
-            console.error('Error: ', response.status);
-        }
-    } catch (e) {
-        console.log(e);
-    }
-
-}
-
 async function deleteForm() {
     
     let form = document.getElementById('formBlock');
@@ -89,19 +60,71 @@ async function getFinalPrice() {
     }
 }
 
-async function DisplayOrderConfirmation() {
+function DisplayOrderID(json) {
+    return json.orderId;
+}
 
-    await getFinalPrice();
+async function CreateDivMessage(json) {
+    
     let block = document.getElementById("articles");
+
+    //create div and a message to thanks  the user.
     let desc = document.createElement("div");
     desc.classList.add("bText");
     block.appendChild(desc);
     desc.textContent = "Merci, votre commande a été validée!"
-    let desc2 = document.createElement("div");
-    desc2.classList.add("bText");
-    block.appendChild(desc2);
 
-    desc2.textContent = "Prix total: " + finalPrice + "€";
+    //create another div to add the final price
+    let DivPrice = document.createElement("div");
+    DivPrice.classList.add("bText");
+    block.appendChild(DivPrice);
+    DivPrice.textContent = "Prix total: " + finalPrice + "€";
+
+    //create one more div to display the order ID.
+    let DivOrder = document.createElement("div");
+    DivOrder.classList.add("bText");
+    block.appendChild(DivOrder);
+    DivOrder.textContent = "Numéro de commande: " + DisplayOrderID(json);
+}
+
+
+
+async function DisplayOrderConfirmation(json) {
+
+    await getFinalPrice();
+    await CreateDivMessage(json);
+    localStorage.clear();
+
+}
+
+//send order to backend
+async function CheckAndSendOrder() {
+
+    let OrderObject = JSON.stringify({contact, products});
+    console.log(OrderObject);
+
+    try {
+        let response = await fetch(getUrlOrder(), {
+            method: 'POST',
+          headers: {
+                'content-type': 'application/json'
+            },
+            body: OrderObject,
+        });
+
+        if (response.ok) {
+            let json = await response.json();
+ 
+            await deleteForm();
+            await DisplayOrderConfirmation(json);
+            console.log('Order completed and sent!');
+
+        } else {
+            console.error('Error: ', response.status);
+        }
+    } catch (e) {
+        console.log(e);
+    }
 
 }
 
